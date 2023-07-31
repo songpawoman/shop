@@ -33,9 +33,9 @@ git에 소스 올려놓았습니다
 그리고 작성된 쿼리문은 항상 문서파일로 저장해놓는 습관을 가지셔야 합니다
 오늘은 제가 적어놓겠습니다   (명령어 채팅창에 넣었습니다)
 
-■ system으로 로그인해서 
+--■ system으로 로그인해서 
 create  tablespace  shop
-datafile '경로/XE/shop.dbf'  size 5M; 
+datafile 'C:\oraclexe\app\oracle\oradata\XE/shop.dbf'  size 5M; 
 
 create  user  shop
 identified by 1234
@@ -44,7 +44,7 @@ quota  unlimited  on shop;
 
 grant create  table , create sequence , create session to shop; 
 
-■ shop 으로 로그인해서  (  conn  shop/1234  )
+--■ shop 으로 로그인해서  (  conn  shop/1234  )
   create  table  admin(
      admin_idx  number  primary key 
    , id varchar2(20)
@@ -62,7 +62,7 @@ create table  topcategory(
  , topname varchar2(30)
 );
 
-create sequence  seq_topcateogy
+create sequence  seq_topcategory
 increment  by  1
 start with 1;
 
@@ -71,6 +71,8 @@ insert into topcategory(topcategory_idx, topname)  values(seq_topcategory.nextva
 insert into topcategory(topcategory_idx, topname)  values(seq_topcategory.nextval, 'Down');
 insert into topcategory(topcategory_idx, topname)  values(seq_topcategory.nextval, 'Accessory');
 insert into topcategory(topcategory_idx, topname)  values(seq_topcategory.nextval, 'Shoes');
+
+commit;
 
 
 create  table  subcategory(
@@ -85,25 +87,25 @@ create  sequence  seq_subcategory
 increment  by  1
 start with 1;
 
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '가디건');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '점퍼');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '니트');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '티셔츠');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 1 , '가디건');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 1 , '점퍼');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 1 , '니트');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 1 , '티셔츠');
 
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '청바지');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '반바지');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '면바지');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '스커트');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '청바지');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '반바지');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '면바지');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 2 , '스커트');
 
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '귀걸이');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '목걸이');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '반지');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '시계');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '귀걸이');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '목걸이');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '반지');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 3 , '시계');
 
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 5 , '운동화');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 5 , '구두');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 5 , '스니커즈');
-insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 5 , '슬리퍼');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '운동화');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '구두');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '스니커즈');
+insert into subcategory(subcategory_idx, topcategory_idx, subname) values(seq_subcategory.nextval, 4 , '슬리퍼');
 
 
 create   table  product (
