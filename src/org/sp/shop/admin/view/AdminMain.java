@@ -4,12 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import util.DBManager;
 
 public class AdminMain extends JFrame{
 	JPanel p_north;
@@ -19,6 +24,8 @@ public class AdminMain extends JFrame{
 	JPanel p_center; //각 컨텐츠 페이지들이 들어올 빈 영역 
 	
 	LoginForm loginForm;
+	DBManager dbManager;
+	
 	
 	//각페이지의 index가 직관성이 없기 때문에 상수로 표현하자 
 	public static final int PRODUCT=0;
@@ -28,6 +35,7 @@ public class AdminMain extends JFrame{
 	
 	//컨텐츠 페이지 
 	Page[] pages;
+	Connection con;
 	
 	public AdminMain() {
 		
@@ -36,6 +44,8 @@ public class AdminMain extends JFrame{
 		la_login = new JLabel("");
 		p_center = new JPanel();
 		pages=new Page[4];
+		dbManager = new DBManager();
+		con=dbManager.connect();//오라클 연결 
 		
 		//페이지생성 
 		pages[PRODUCT] = new ProductPage();
@@ -59,7 +69,14 @@ public class AdminMain extends JFrame{
 		setSize(1100, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				//db연결 해제 + 프로세스 종료 
+				dbManager.release(con);
+				System.exit(0);//프로세스 종료
+			}
+		});
 		
 		//loginForm = new LoginForm(this);
 		

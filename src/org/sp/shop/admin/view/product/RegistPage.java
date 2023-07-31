@@ -1,13 +1,23 @@
 package org.sp.shop.admin.view.product;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -38,25 +48,37 @@ public class RegistPage extends ProductSubPage{
 	SubCategoryDAO subCategoryDAO;
 	List<TopCategory> topList; //콤보박스에 채워넣을 원본 데이터 
 											//DTO들이 들어있음
-			
+	JFileChooser chooser;
+	Image image; //파일탐색기에서 선택한 바로 그 파일..
+	JButton bt_regist; //등록버튼
+	
 	
 	public RegistPage() {
 		box_top = new JComboBox();
 		box_sub = new JComboBox();
 		t_product_name = new JTextField();
 		t_brand = new JTextField();
-		t_price = new JTextField();
+		t_price = new JTextField("0");
 		la_path = new JLabel("이미지를 선택하세요");
 		bt_file = new JButton("파일찾기");
-		p_preview = new JPanel();//추후 그림을 직접 그리겠슴..
+		p_preview = new JPanel() {
+			public void paint(Graphics g) {
+				g.drawImage(image, 0, 0, 130,130, p_preview);
+			}
+		};//추후 그림을 직접 그리겠슴..
+		
 		area = new JTextArea();
 		scroll = new JScrollPane(area);
 		p_content = new JPanel();
 		topCategoryDAO = new TopCategoryDAO();
 		subCategoryDAO  = new SubCategoryDAO();
+		chooser = new JFileChooser("D:/morning/html_workspace/images");
+		bt_regist  = new JButton("등록");
 		
 		//스타일
 		p_content.setPreferredSize(new Dimension(700, 550));
+		p_preview.setPreferredSize(new Dimension(130,130));
+		p_preview.setBackground(Color.YELLOW);
 		
 		Dimension d = new Dimension(700, 50);
 		
@@ -81,6 +103,7 @@ public class RegistPage extends ProductSubPage{
 		p_content.add(scroll);
 		
 		add(p_content);
+		add(bt_regist);
 		
 		//콤보박스에 상위 카테고리 채우기 
 		getTopList();
@@ -97,7 +120,57 @@ public class RegistPage extends ProductSubPage{
 				subList(topcategory_idx);
 			}
 		});
+		
+		//가격 텍스트필드에 이벤트연결하기
+		t_price.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				//입력한 데이터를 대상으로 parseInt를 시도하여, 만일 
+				//에러가 발생하면, 문자를 넣은것임..
+				try {
+					Integer.parseInt(t_price.getText());
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(RegistPage.this, "숫자만 입력하세요");
+					t_price.setText("0");
+				} 
+			}
+		});
+		
+		//파일 찾기 버튼에 이벤트연결 
+		bt_file.addActionListener((e)->{
+			openFile();
+		});
+		
+		bt_regist.addActionListener((e)->{
+			regist();
+		});
+		
 	}
+	
+	//상품 등록하기
+	public void regist() {
+		
+	}
+	
+	//파일 탐색기를 띄우고, 그 안에서 원하는 이미지파일을 선택하면, 
+	//해당 이미지를 얻어와 JPanel에 그리자 
+	public void openFile() {
+		int result = chooser.showOpenDialog(this);
+		if(result==JFileChooser.APPROVE_OPTION ) {
+			//p_preview 패널에 그림을 그려넣자
+			File file=chooser.getSelectedFile();
+			
+			//file 객체를 이미지로 변환해보자
+			try {
+				image=ImageIO.read(file);
+				//p_preview 패널의 그림 다시 그리기 요청 
+				//repaint() --> update() --> paint() 
+				p_preview.repaint();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public void getTopList() {
 		topList = topCategoryDAO.selectAll();
