@@ -33,7 +33,14 @@ public class DBManager {
 	//데이터베이스완 관련된 자원 해제
 	
 	//con, pstmt 를 모두 닫는 경우 (DML)
-	public void release(Connection con) {
+	public void release(Connection con, PreparedStatement pstmt) {
+		if(pstmt!=null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		if(con!=null) {
 			try {
 				con.close();
@@ -41,20 +48,11 @@ public class DBManager {
 				e.printStackTrace();
 			}
 		}
-	
-	}	
-	public void release(PreparedStatement pstmt) {
-		if(pstmt!=null) {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}	
+		
 	}
-	
+
 	//con, pstmt, rs 를 모두 닫는 경우(Select)	
-	public void release( PreparedStatement pstmt, ResultSet rs) {
+	public void release(Connection con, PreparedStatement pstmt, ResultSet rs) {
 		if(rs!=null) {
 			try {
 				rs.close();
@@ -65,6 +63,13 @@ public class DBManager {
 		if(pstmt!=null) {
 			try {
 				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(con!=null) {
+			try {
+				con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

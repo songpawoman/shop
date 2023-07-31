@@ -28,6 +28,8 @@ import org.sp.shop.admin.domain.TopCategory;
 import org.sp.shop.admin.model.SubCategoryDAO;
 import org.sp.shop.admin.model.TopCategoryDAO;
 
+import util.DBManager;
+
 //등록화면..
 public class RegistPage extends ProductSubPage{
 	JComboBox box_top; //상위 카테고리
@@ -52,6 +54,7 @@ public class RegistPage extends ProductSubPage{
 	Image image; //파일탐색기에서 선택한 바로 그 파일..
 	JButton bt_regist; //등록버튼
 	
+	DBManager dbManager;
 	
 	public RegistPage() {
 		box_top = new JComboBox();
@@ -70,8 +73,9 @@ public class RegistPage extends ProductSubPage{
 		area = new JTextArea();
 		scroll = new JScrollPane(area);
 		p_content = new JPanel();
-		topCategoryDAO = new TopCategoryDAO();
-		subCategoryDAO  = new SubCategoryDAO();
+		dbManager = new DBManager();
+		topCategoryDAO = new TopCategoryDAO(dbManager);
+		subCategoryDAO  = new SubCategoryDAO(dbManager);
 		chooser = new JFileChooser("D:/morning/html_workspace/images");
 		bt_regist  = new JButton("등록");
 		
