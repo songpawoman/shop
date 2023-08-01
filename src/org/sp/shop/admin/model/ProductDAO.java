@@ -50,6 +50,15 @@ public class ProductDAO {
 		return result;
 	}
 	
+	//모든 상품 가져오기(하위 카테고리도 함께 - join) 
+	public void selectAll() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("select subname, product_idx, product_name, brand, price, filename");
+		sb.append(" from  subcategory s , product p");
+		sb.append(" where s.subcategory_idx=p.subcategory_idx");
+		
+	}
 }
 
 

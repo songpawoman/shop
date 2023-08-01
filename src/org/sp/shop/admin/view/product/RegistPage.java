@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -180,21 +183,44 @@ public class RegistPage extends ProductSubPage{
 		int index=box_sub.getSelectedIndex(); //몇번째 콤포박스의 아이템을 선택했는지..
 		SubCategory subCategory=subList.get(index);
 		
-		//dto에 데이터 넣기 
-		dto.setProduct_name(product_name);
-		dto.setBrand(brand);
-		dto.setPrice(price);
-		dto.setFilename(filename);
-		dto.setDetail(detail);
-		dto.setSubcategory_idx(subCategory.getSubcategory_idx());
+		//유저가 선택한 이미지를 현재 앱이 인식할 수 있는 경로로 옮겨놓자 
+		FileInputStream fis=null;
+		FileOutputStream fos=null;
 		
-		//DAO를 이용하여 오라클에 insert!!!
-		int result=productDAO.insert(dto);
-		if(result==0) {
-			JOptionPane.showMessageDialog(this, "등록되지 않았습니다");
-		}else {
-			JOptionPane.showMessageDialog(this, "등록성공");
+		//유저가 선택한 파일을 대상으로 입력 스트림 생성
+		try {
+			fis = new FileInputStream(file);
+			fos=new FileOutputStream("D:/morning/javase_workspace/shop/product_img/"+filename);
+			
+			int data=-1;
+			while(true) {
+				data=fis.read(); //1byte  읽기
+				if(data==-1)break;
+				fos.write(data);				
+			}
+			//복사완료 
+			//dto에 데이터 넣기 
+			dto.setProduct_name(product_name);
+			dto.setBrand(brand);
+			dto.setPrice(price);
+			dto.setFilename(filename);
+			dto.setDetail(detail);
+			dto.setSubcategory_idx(subCategory.getSubcategory_idx());
+			
+			//DAO를 이용하여 오라클에 insert!!!
+			int result=productDAO.insert(dto);
+			if(result==0) {
+				JOptionPane.showMessageDialog(this, "등록되지 않았습니다");
+			}else {
+				JOptionPane.showMessageDialog(this, "등록성공");
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
 	}
 	
 	//파일 탐색기를 띄우고, 그 안에서 원하는 이미지파일을 선택하면, 
