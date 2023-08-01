@@ -26,7 +26,7 @@ public class ProductDAO {
 		con=dbManager.connect();
 		
 		StringBuilder sb=new StringBuilder();
-		sb.append("insert into product(product_idx, product_name)");
+		sb.append("insert into product(product_idx, product_name");
 		sb.append(",brand, price, filename, detail");
 		sb.append(", subcategory_idx) values(seq_product.nextval,?,?,?,?,?,?)");
 		
