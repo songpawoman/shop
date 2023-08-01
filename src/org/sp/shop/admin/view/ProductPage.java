@@ -88,6 +88,12 @@ public class ProductPage extends Page{
 		for(int i=0;i<pages.length;i++) {
 			if(i==n) { //넘겨받은 매개변수와 i가 일치할때만 보이게..
 				pages[i].setVisible(true); //보이게 처리
+				
+				//상품 목록 페이지의 경우엔, 화면 갱신요구됨...
+				if(pages[i] instanceof ListPage) {
+					ListPage listPage=(ListPage)pages[i];
+					listPage.getList(); //데이터갱신...
+				}
 			}else {
 				pages[i].setVisible(false);//안보이게 처리
 			}
