@@ -31,7 +31,8 @@ public class ListPage extends ProductSubPage{
 	//호출할 수 있도록 메서드를 정의해놓자 
 	public void getList() {
 		model.getProductList();//db연동		
-		model.fireTableDataChanged();
+		
+		model.fireTableDataChanged();//TableModel의 갱신
 	}
 }
 

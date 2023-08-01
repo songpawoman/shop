@@ -67,6 +67,7 @@ public class ProductDAO {
 		sb.append("select subname, product_idx, product_name, brand, price, filename");
 		sb.append(" from subcategory s , product p");
 		sb.append(" where s.subcategory_idx=p.subcategory_idx");
+		sb.append(" order by product_idx asc");
 		
 		try {
 			pstmt=con.prepareStatement(sb.toString());
