@@ -97,8 +97,24 @@ public class ClientMain extends JFrame{
 		}		
 	}
 	
-	//서버에 메시지 보내기 
+	//서버에 메시지 보내기
+	//회원제일 경우, 메시지뿐만 아니라, 각종 부가적 정보도 함께 보내야 
+	//하기 때문에, 구조화된 텍스트 기반의 데이터를 표현할 수 있는 방법을
+	//찾아야 한다...json (아이디, 이름, 이모티콘(smile.png), 메시지)
+	//
 	public void send() {
+		StringBuffer sb=new StringBuffer();
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("{");
+		sb.append("\"member_idx\":23,");
+		sb.append("\"id\" :\"zino\", ");
+		sb.append("\"name\" :\"지노\","); 
+		sb.append("\"icon\" : \"smile.png\", ");
+		sb.append("\"data\" : 변수 ");
+		sb.append("}");
+	
+		
 		cmt.sendMsg(t_input.getText());
 		t_input.setText("");
 	}
