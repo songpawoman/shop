@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 //무한루프로, 상대방의 메시지를 청취해야 하므로 쓰레드 이용 
 public class ClientMessageThread extends Thread{
 	ClientMain clientMain;
@@ -32,8 +36,22 @@ public class ClientMessageThread extends Thread{
 		String msg=null;
 		try {
 			msg=buffr.readLine();
-			clientMain.area.append(msg+"\n");
+			
+			//클라이언트가 json 으로 프로토콜을 정의하여 전송했으므로, 
+			//서버에서는 이  json을 해석하여 원하는 데이터로 가공할 필요가 있슴  
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject=(JSONObject)jsonParser.parse(msg);
+			//zino님: 점심먹을래?
+			String id= (String)jsonObject.get("id");
+			String data= (String)jsonObject.get("data");
+			
+			String message=id+"님:"+data;
+			
+			clientMain.area.append(message+"\n");
+			
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

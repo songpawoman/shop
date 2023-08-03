@@ -105,6 +105,7 @@ public class ClientMain extends JFrame{
 	public void send() {
 		StringBuffer sb = new StringBuffer();
 		
+		//개발자가 전송 프로토콜을 정의한다..
 		sb.append("{");
 		sb.append("\"member_idx\":23,");
 		sb.append("\"id\" :\"zino\", ");
@@ -115,7 +116,7 @@ public class ClientMain extends JFrame{
 	
 		System.out.println(sb.toString());
 		
-		cmt.sendMsg(t_input.getText());
+		cmt.sendMsg(sb.toString());
 		t_input.setText("");
 	}
 	
