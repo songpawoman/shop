@@ -103,17 +103,17 @@ public class ClientMain extends JFrame{
 	//찾아야 한다...json (아이디, 이름, 이모티콘(smile.png), 메시지)
 	//
 	public void send() {
-		StringBuffer sb=new StringBuffer();
-
 		StringBuffer sb = new StringBuffer();
+		
 		sb.append("{");
 		sb.append("\"member_idx\":23,");
 		sb.append("\"id\" :\"zino\", ");
 		sb.append("\"name\" :\"지노\","); 
 		sb.append("\"icon\" : \"smile.png\", ");
-		sb.append("\"data\" : 변수 ");
+		sb.append("\"data\" :\""+t_input.getText()+"\" ");
 		sb.append("}");
 	
+		System.out.println(sb.toString());
 		
 		cmt.sendMsg(t_input.getText());
 		t_input.setText("");
