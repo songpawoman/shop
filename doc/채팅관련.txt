@@ -1,0 +1,60 @@
+--------------------------------
+-- 사원정보 (친구목록과 동일) 
+--------------------------------
+create table emp(
+	 emp_idx number primary key 
+	, id varchar2(20)
+	, pass varchar2(64)
+	, name varchar2(20)
+	, job varchar2(20)
+	, photo varchar2(20)  
+);
+
+create sequence seq_emp
+increment by 1
+start with 1;
+
+
+--------------------------------
+-- 채팅방 
+--------------------------------
+create table room(
+	room_idx number primary key 
+	, emp_idx number  -- 방의 호스트 사원
+	, title varchar2(50)
+	, time date default sysdate 
+	, constraint fk_emp_room foreign key (emp_idx) references emp(emp_idx)
+);
+create sequence  seq_room
+increment by 1
+start with 1;
+
+--------------------------------
+-- 룸메이트 ( 채팅참여자 ) 
+--------------------------------
+create table room_mate(
+	room_mate_idx number primary key 
+	, room_idx number 
+	, emp_idx number 
+	, constraint fk_room_room_mate foreign key (room_idx) references room(room_idx)
+	, constraint fk_room_emp foreign key (emp_idx) references emp(emp_idx)
+);
+
+create sequence seq_room_mate
+increment by 1
+start with 1;
+
+--------------------------------
+-- 메시지 
+--------------------------------
+create table message(
+ 	  message_idx number primary key 
+	, room_mate_idx number 
+	, msg clob
+	, msgdate  date default sysdate
+);
+
+create sequence  seq_message
+increment by 1
+start with 1;
+

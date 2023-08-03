@@ -40,6 +40,7 @@ public class ClientMessageThread extends Thread{
 			//클라이언트가 json 으로 프로토콜을 정의하여 전송했으므로, 
 			//서버에서는 이  json을 해석하여 원하는 데이터로 가공할 필요가 있슴  
 			JSONParser jsonParser = new JSONParser();
+			
 			JSONObject jsonObject=(JSONObject)jsonParser.parse(msg);
 			//zino님: 점심먹을래?
 			String id= (String)jsonObject.get("id");

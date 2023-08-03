@@ -15,6 +15,7 @@ public class DBManager {
 	String password="1234";
 	
 	
+	
 	//커텍션 만들기
 	public Connection connect() {
 		Connection con=null;

@@ -148,3 +148,17 @@ commit;
 
 select table_name from user_tables;
 select sequence_name from user_sequences;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
